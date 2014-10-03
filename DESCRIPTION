@@ -9,3 +9,5 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: This package contains some simple functions for
     conveniently loading data produced by ibuttons
 License: What license is it under?
+Suggests: knitr
+VignetteBuilder: knitr
