@@ -1,7 +1,13 @@
-<!-- 
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{vig1}
--->
+---
+title: "Loading ibutton data"
+author: "Andrew MacDonald"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{loadibutton}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
