@@ -5,10 +5,10 @@ Version: 0.1
 Date: 2014-08-27
 Authors@R: person("Andrew", "MacDonald", email = "a.a.m.macdonald@gmail.com",
     role = c("aut", "cre"))
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Maintainer: <a.a.m.macdonald@gmail.com>
 Description: This package contains some simple functions for
     conveniently loading data produced by ibuttons
-License: What license is it under?
+License: Apache License, Version 2.0
 Suggests:
     knitr
 VignetteBuilder: knitr
