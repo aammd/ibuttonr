@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------
 library(ibuttonr)
-ibutton.data <- read.ibutton.folder(".")
+ibutton.data <- read_ibutton_folder(".")
 str(ibutton.data)
 
 ## ----eval=FALSE----------------------------------------------------------
