@@ -3,23 +3,23 @@ title: "Loading ibutton data"
 author: "Andrew MacDonald"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{loadibutton}
+  %\VignetteIndexEntry{reading and tidying ibutton output}
   %\VignetteEngine{knitr::knitr}
   %\usepackage[utf8]{inputenc}
 ---
 
-## Loading and cleaning ibutton data
+# Loading and cleaning ibutton data
 **Andrew MacDonald, Oct 2014**
 
 [ibutton](http://en.wikipedia.org/wiki/1-Wire) temperature loggers are frequently used to monitor temperature in nature.  They are tough and versatile, and have been used in many applications.
 
 The data that ibuttons produce requires a bit of cleaning before use in data analysis. `ibuttonr` automates the process of reading and cleaning your ibutton data.
 
-### Loading data
+## Loading data
 
 `ibuttonr` assumes that you have all your ibutton data in a single folder, stored as .csv files. For advice on getting your data out of an ibutton and into a csv, see the [product website](http://www.maximintegrated.com/en/app-notes/index.mvp/id/3358).  
 
-Once you have all your data in a single folder, simply point the function `read.ibutton.folder` at it:
+Once you have all your data in a single folder, simply point the function `read.ibutton.folder` at it.  Here is how you would do so if the working directory is set to your ibutton data folder (`.`):
 
 ```{r}
 library(ibuttonr)
@@ -27,37 +27,55 @@ ibutton.data <- read_ibutton_folder(".")
 str(ibutton.data)
 ```
 
-**NOTE** this function 
+**NOTE** this function assumes that the directory has *only* ibutton csv files inside. 
 
+if your working directory is set elsewhere, you can use a relative path to the folder, such as `ibuttondata/`.
 
+## Checking the data
+
+### Stopped ibuttons
+Ibuttons frequently fail, but which ones? you could just check the number of rows in each, and pick
+the ones which are suspiciously short, indicating that the ibutton stopped
+recording temperature. This function automates this process to make it a bit
+more objective: it points out ones which recorded less than the median number
+of datapoints for the experiment. It assumes that all the ibuttons were
+supposed to run for equal amounts of time.
 ```{reval=FALSE}
-## which ones failed? you could just check the number of rows in each, and pick
-## the ones which are suspiciously short, indicating that the ibutton stopped
-## recording temperature. This function automates this process to make it a bit
-## more objective: it points out ones which recorded less than the median number
-## of datapoints for the experiment. It assumes that all the ibuttons were
-## supposed to run for equal amounts of time
-id.broken(ibutton.data)
+
+id_broken(ibutton.data)
 ## get the lengths for your own use:
 sapply(ibutton.data,nrow)
-## sometimes, fieldworkers record the data incorrectly -- for example, one
-## common mistake is to save data from the same ibutton twice with different
-## filenames. However, each ibutton has a unique registration number. check
-## for any number >1 in this table to identify this error. Additionally, if you
-## recorded the registration numbers (written on the back of the ibuttons) you
-## could use this to get them from the datafiles themselves
-table(get.registration.numbers("example.data/"))
-## correct the dates and make dataframe
-## Now that the data is checked, this function takes the list of ibuttons and
-## combines them together. It also reformats the "Date.Time" variable, into a
-## format that R recognizes as a date and time.
-ibutton.dataframe <- ibuttons.to.data.frame(ibutton.data)
+```
+
+### Duplicate registration numbers
+sometimes, fieldworkers record the data incorrectly -- for example, one
+common mistake is to save data from the same ibutton twice with different
+filenames. However, each ibutton has a unique registration number. check
+for any number >1 in this table to identify this error. Additionally, if you
+recorded the registration numbers (written on the back of the ibuttons) you
+could use this to get them from the datafiles themselves
+```{r }
+
+table(get_registration_numbers("."))
+
+```
+
+correct the dates and make dataframe
+Now that the data is checked, this function takes the list of ibuttons and
+combines them together. It also reformats the "Date.Time" variable, into a
+format that R recognizes as a date and time.
+
+```{r}
+ibutton.dataframe <- ibuttons_to_data_frame(ibutton.data)
 head(ibutton.dataframe)
-summary(ibutton.dataframe)
+knitr::kable(summary(ibutton.dataframe))
+```
+
+```{r}
 ## Here are some ways to graph this data:
 with(subset(ibutton.dataframe,ibutton=="10a"),plot(Date.Time,Value,type="n"))
 for(i in levels(ibutton.dataframe$ibutton)){
 x <- which(ibutton.dataframe$ibutton==i)
 lines(ibutton.dataframe$Date.Time[x],ibutton.dataframe$Value[x])
 }
-```
+###
