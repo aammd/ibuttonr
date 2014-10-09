@@ -2,7 +2,8 @@
 #'
 #' @param f Filename of ibutton data
 #' @return a \code{data.frame} with a column for original file name
-read.csv.with.name <- function(f, ...){
+#' @export
+read_named_ibutton <- function(f, ...){
   cbind(ibutton=sub("\\.csv$", "", basename(f)), read.csv(f, ...))
 }
 
@@ -15,10 +16,11 @@ read.csv.with.name <- function(f, ...){
 #'
 #' @param folder Folder containing ibutton data only
 #' @return Named list of ibutton data. Names are taken from base names.
-read.ibutton.folder <- function(folder,...){
+#' @export
+read_ibutton_folder <- function(folder,...){
   # foldername <- paste0("./",folder)
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
-  ibut.dat <- lapply(ibut.files,read.csv.with.name,skip=13,stringsAsFactors=FALSE)
+  ibut.dat <- lapply(ibut.files,read_named_ibutton,skip=13,stringsAsFactors=FALSE)
   names(ibut.dat) <- lapply(ibut.files,function(f) sub("\\.csv$", "", basename(f)))
   ibut.dat
 }
@@ -30,21 +32,23 @@ read.ibutton.folder <- function(folder,...){
 #'
 #' @param ibutt.list List of ibuttons to combine
 #' @return names of suspect ibuttons
-id.broken <- function(ibutt.list){
+#' @export
+id_broken <- function(ibutt.list){
   n.obs <- sapply(ibutt.list,nrow)
   med.n.obs <- median(n.obs)
   prob.broken <- which(n.obs<med.n.obs)
   names(ibutt.list)[prob.broken]
 }
 
-##' Extracts the registration number for an ibutton
-##'
-##' This function extracts the registration number from the "preamble", ie the 13 lines
-##' of information at the start of an ibutton file
-##'
-##' @param ibutton.preamble An ibutton preamble
-##' @return Registration number (character)
-preamble.extract.registration.number <- function(ibutton.preamble){
+#' Extracts the registration number for an ibutton
+#'
+#' This function extracts the registration number from the "preamble", ie the 13 lines
+#' of information at the start of an ibutton file
+#'
+#' @param ibutton.preamble An ibutton preamble
+#' @return Registration number (character)
+#' @export
+preamble_extract_registration_number <- function(ibutton.preamble){
   location.reg.number <- grep(ibutton.preamble,pattern="Registration Number",useBytes=TRUE)
   split.line <- strsplit(ibutton.preamble[location.reg.number],split=" ")
   sapply(split.line,function(x) grep(x,pattern="[0-9,A-Z]{16}",value=TRUE))
@@ -57,11 +61,12 @@ preamble.extract.registration.number <- function(ibutton.preamble){
 #' registration numbers
 #'
 #' @param folder Folder where all ibutton files are kept
-get.registration.numbers <- function(folder,...){
+#' @export
+get_registration_numbers <- function(folder,...){
   # foldername <- paste0("./",folder)
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
   ibutton.preamble <- lapply(ibut.files,function(x) readLines(x,n=13))
-  sapply(ibutton.preamble,preamble.extract.registration.number)
+  sapply(ibutton.preamble,preamble_extract_registration_number)
 }
 
 #' Combines given list of ibuttons into a data.frame
@@ -70,7 +75,8 @@ get.registration.numbers <- function(folder,...){
 #' Also performs date conversion
 #'
 #' @param ibut.list List of ibutton data
-ibuttons.to.data.frame <- function(ibut.list){
+#' @export
+ibuttons_to_data_frame <- function(ibut.list){
   ## attach all together in a complete dataframe
   ibutton.long.dataframe <- do.call(rbind,ibut.list)
   ibutton.long.dataframe[["Date.Time"]] <- strptime(ibutton.long.dataframe[["Date.Time"]],format="%d/%m/%y %I:%M:%S %p")
