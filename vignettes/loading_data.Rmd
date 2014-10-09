@@ -2,25 +2,62 @@
 title: "Loading ibutton data"
 author: "Andrew MacDonald"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{loadibutton}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\usepackage[utf8]{inputenc}
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Loading and cleaning ibutton data
+**Andrew MacDonald, Oct 2014**
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+[ibutton](http://en.wikipedia.org/wiki/1-Wire) temperature loggers are frequently used to monitor temperature in nature.  They are tough and versatile, and have been used in many applications.
+
+The data that ibuttons produce requires a bit of cleaning before use in data analysis. `ibuttonr` automates the process of reading and cleaning your ibutton data.
+
+### Loading data
+
+`ibuttonr` assumes that you have all your ibutton data in a single folder, stored as .csv files. For advice on getting your data out of an ibutton and into a csv, see the [product website](http://www.maximintegrated.com/en/app-notes/index.mvp/id/3358).  
+
+Once you have all your data in a single folder, simply point the function `read.ibutton.folder` at it:
 
 ```{r}
-summary(cars)
+library(ibuttonr)
+#ibutton.data <- read.ibutton.folder(".")
+#str(ibutton.data)
 ```
 
-You can also embed plots, for example:
+**NOTE** this function 
 
-```{r, echo=FALSE}
-plot(cars)
+
+```{reval=FALSE}
+## which ones failed? you could just check the number of rows in each, and pick
+## the ones which are suspiciously short, indicating that the ibutton stopped
+## recording temperature. This function automates this process to make it a bit
+## more objective: it points out ones which recorded less than the median number
+## of datapoints for the experiment. It assumes that all the ibuttons were
+## supposed to run for equal amounts of time
+id.broken(ibutton.data)
+## get the lengths for your own use:
+sapply(ibutton.data,nrow)
+## sometimes, fieldworkers record the data incorrectly -- for example, one
+## common mistake is to save data from the same ibutton twice with different
+## filenames. However, each ibutton has a unique registration number. check
+## for any number >1 in this table to identify this error. Additionally, if you
+## recorded the registration numbers (written on the back of the ibuttons) you
+## could use this to get them from the datafiles themselves
+table(get.registration.numbers("example.data/"))
+## correct the dates and make dataframe
+## Now that the data is checked, this function takes the list of ibuttons and
+## combines them together. It also reformats the "Date.Time" variable, into a
+## format that R recognizes as a date and time.
+ibutton.dataframe <- ibuttons.to.data.frame(ibutton.data)
+head(ibutton.dataframe)
+summary(ibutton.dataframe)
+## Here are some ways to graph this data:
+with(subset(ibutton.dataframe,ibutton=="10a"),plot(Date.Time,Value,type="n"))
+for(i in levels(ibutton.dataframe$ibutton)){
+x <- which(ibutton.dataframe$ibutton==i)
+lines(ibutton.dataframe$Date.Time[x],ibutton.dataframe$Value[x])
+}
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
