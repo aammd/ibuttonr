@@ -3,6 +3,17 @@
 
 ibuttons are common tools for measuring temperature over time. But, they're also slightly error-prone, and the data requires just a touch of cleaning. These convenience functions automate the reading of ibutton data and perform some elementary error checking.
 
+## Installing ibuttonr
+
+You can install ibuttonr directly from github using `devtools`:
+
+```
+install.packages("devtools")
+devtools::install_github("aammd/ibuttonr")
+```
+
+
+
 
 Copyright 2014 Andrew MacDonald
 
