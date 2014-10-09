@@ -39,7 +39,7 @@ id.broken <- function(ibutt.list){
 
 ##' Extracts the registration number for an ibutton
 ##'
-##' This function extracts the  from the "preamble", ie the 13 lines
+##' This function extracts the registration number from the "preamble", ie the 13 lines
 ##' of information at the start of an ibutton file
 ##'
 ##' @param ibutton.preamble An ibutton preamble
