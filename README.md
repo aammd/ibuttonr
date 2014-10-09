@@ -12,9 +12,28 @@ install.packages("devtools")
 devtools::install_github("aammd/ibuttonr")
 ```
 
+## Using ibuttonr
+
+1. Put all your ibutton files into a single directory. Don't put any other data here
+2. Read all the files in that folder at once with `read_ibutton_folder()`
+
+```
+ibutton.data <- read_ibutton_folder(".")
+```
+
+3. Perform some checks (optional)
+4. Convert list into data.frame with `ibuttons_to_data_frame()`
+
+```
+ibuttons_to_data_frame(ibutton.data)
+```
+
+See `vignette("loading_data")` for more details and some examples of error checking.
 
 
 
+
+## License
 Copyright 2014 Andrew MacDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
