@@ -3,11 +3,12 @@ Type: Package
 Title: Process data produced by ibuttons
 Version: 0.1
 Date: 2014-08-27
-Authors@R: person("Andrew", "MacDonald", email = "aamacdonald@gmail.com",
+Authors@R: person("Andrew", "MacDonald", email = "a.a.m.macdonald@gmail.com",
     role = c("aut", "cre"))
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: This package contains some simple functions for
     conveniently loading data produced by ibuttons
 License: What license is it under?
-Suggests: knitr
+Suggests:
+    knitr
 VignetteBuilder: knitr
