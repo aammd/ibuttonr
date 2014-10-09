@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Loading data</title>
+<title>Loading and cleaning ibutton data</title>
 
 <script type="text/javascript">
 window.onload = function() {
@@ -201,6 +201,10 @@ hr {
 </head>
 
 <body>
+<h2>Loading and cleaning ibutton data</h2>
+
+<p><strong>Andrew MacDonald, Oct 2014</strong></p>
+
 <p><a href="http://en.wikipedia.org/wiki/1-Wire">ibutton</a> temperature loggers are frequently used to monitor temperature in nature.  They are tough and versatile, and have been used in many applications.</p>
 
 <p>The data that ibuttons produce requires a bit of cleaning before use in data analysis. <code>ibuttonr</code> automates the process of reading and cleaning your ibutton data.</p>
@@ -211,7 +215,17 @@ hr {
 
 <p>Once you have all your data in a single folder, simply point the function <code>read.ibutton.folder</code> at it:</p>
 
-<pre><code class="r">ibutton.data &lt;- read.ibutton.folder(&quot;.&quot;)
+<pre><code class="r">library(ibuttonr)
+ibutton.data &lt;- read.ibutton.folder(&quot;.&quot;)
+str(ibutton.data)
+</code></pre>
+
+<pre><code>## List of 1
+##  $ 10a:&#39;data.frame&#39;: 1577 obs. of  4 variables:
+##   ..$ ibutton  : Factor w/ 1 level &quot;10a&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##   ..$ Date.Time: chr [1:1577] &quot;11/10/12 12:11:00 PM&quot; &quot;11/10/12 1:11:00 PM&quot; &quot;11/10/12 2:11:00 PM&quot; &quot;11/10/12 3:11:00 PM&quot; ...
+##   ..$ Unit     : chr [1:1577] &quot;C&quot; &quot;C&quot; &quot;C&quot; &quot;C&quot; ...
+##   ..$ Value    : num [1:1577] 22.5 23 23 23 22.5 22 21.5 21.5 21 21 ...
 </code></pre>
 
 <p><strong>NOTE</strong> this function </p>

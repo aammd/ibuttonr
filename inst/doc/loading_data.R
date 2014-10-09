@@ -1,5 +1,7 @@
 ## ------------------------------------------------------------------------
+library(ibuttonr)
 ibutton.data <- read.ibutton.folder(".")
+str(ibutton.data)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  ## which ones failed? you could just check the number of rows in each, and pick

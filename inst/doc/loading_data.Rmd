@@ -8,6 +8,9 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
+## Loading and cleaning ibutton data
+**Andrew MacDonald, Oct 2014**
+
 [ibutton](http://en.wikipedia.org/wiki/1-Wire) temperature loggers are frequently used to monitor temperature in nature.  They are tough and versatile, and have been used in many applications.
 
 The data that ibuttons produce requires a bit of cleaning before use in data analysis. `ibuttonr` automates the process of reading and cleaning your ibutton data.
@@ -19,7 +22,9 @@ The data that ibuttons produce requires a bit of cleaning before use in data ana
 Once you have all your data in a single folder, simply point the function `read.ibutton.folder` at it:
 
 ```{r}
+library(ibuttonr)
 ibutton.data <- read.ibutton.folder(".")
+str(ibutton.data)
 ```
 
 **NOTE** this function 

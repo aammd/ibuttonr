@@ -23,8 +23,8 @@ Once you have all your data in a single folder, simply point the function `read.
 
 ```{r}
 library(ibuttonr)
-#ibutton.data <- read.ibutton.folder(".")
-#str(ibutton.data)
+ibutton.data <- read.ibutton.folder(".")
+str(ibutton.data)
 ```
 
 **NOTE** this function 
