@@ -4,10 +4,12 @@
 \alias{ibuttons_to_data_frame}
 \title{Combines given list of ibuttons into a data.frame}
 \usage{
-ibuttons_to_data_frame(ibut.list)
+ibuttons_to_data_frame(ibut.list, date_format = "\%d/\%m/\%y \%I:\%M:\%S \%p")
 }
 \arguments{
 \item{ibut.list}{List of ibutton data}
+
+\item{date_format}{a character string indicating the format of the dates. see `?strptime`}
 }
 \description{
 This function takes a list of ibuttons and \code{rbinds} them.

@@ -113,10 +113,11 @@ get_registration_numbers <- function(folder,...){
 #' Also performs date conversion
 #'
 #' @param ibut.list List of ibutton data
+#' @param date_format a character string indicating the format of the dates. see `?strptime`
 #' @export
-ibuttons_to_data_frame <- function(ibut.list){
+ibuttons_to_data_frame <- function(ibut.list, date_format = "%d/%m/%y %I:%M:%S %p"){
   ## attach all together in a complete dataframe
   ibutton.long.dataframe <- do.call(rbind,ibut.list)
-  ibutton.long.dataframe[["Date.Time"]] <- strptime(ibutton.long.dataframe[["Date.Time"]],format="%d/%m/%y %I:%M:%S %p")
+  ibutton.long.dataframe[["Date.Time"]] <- strptime(ibutton.long.dataframe[["Date.Time"]],format=date_format)
   ibutton.long.dataframe
 }
