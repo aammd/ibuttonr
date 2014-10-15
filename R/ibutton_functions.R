@@ -13,6 +13,24 @@ get_preamble_length <- function(allfiles){
 }
 
 
+#' Create more accurate header names for the dataset
+#'
+#' Occasionally ibuttons produce data with other, unlabelled numbers in a column
+#' to the right of the actual data. This function counts the fields in the row below the data
+#' and then supplies a nicer header
+#'
+#' @param allfiles a list of all file names of ibuttons
+#' @return an integer giving the number of fields in row below the header
+#' @export
+header_names <- function(allfiles){
+  one_top <- readLines(allfiles[1], n = 25)
+  loc_header <- which(grepl("^Date", one_top))
+  # the number of fields in the data, one row below the header
+  dat_len <- count.fields(textConnection(one_top[loc_header + 1]), sep = ",")
+  col_names <- unlist(strsplit(one_top[loc_header], split = ",",))
+  if(dat_len == 3) col_names else c(col_names, paste0("V", seq_len(dat_len-3)))
+}
+
 
 #' Add filename to data
 #'
@@ -38,9 +56,8 @@ read_ibutton_folder <- function(folder,...){
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
   nskip <- get_preamble_length(ibut.files)
   ## count the fields
-  header_line <- nskip + 1
-
-  ibut.dat <- lapply(ibut.files,read_named_ibutton, skip=nskip, stringsAsFactors=FALSE)
+  hnames <- header_names(ibut.files)
+  ibut.dat <- lapply(ibut.files,read_named_ibutton, skip=nskip, stringsAsFactors=FALSE, col.names = hnames)
   names(ibut.dat) <- lapply(ibut.files,function(f) sub("\\.csv$", "", basename(f)))
   ibut.dat
 }

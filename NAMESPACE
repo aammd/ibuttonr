@@ -2,6 +2,7 @@
 
 export(get_preamble_length)
 export(get_registration_numbers)
+export(header_names)
 export(ibuttons_to_data_frame)
 export(id_broken)
 export(preamble_extract_registration_number)
