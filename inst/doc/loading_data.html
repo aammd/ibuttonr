@@ -213,11 +213,19 @@ hr {
 
 <p><code>ibuttonr</code> assumes that you have all your ibutton data in a single folder, stored as .csv files. For advice on getting your data out of an ibutton and into a csv, see the <a href="http://www.maximintegrated.com/en/app-notes/index.mvp/id/3358">product website</a>.  </p>
 
-<p>Once you have all your data in a single folder, simply point the function <code>read.ibutton.folder</code> at it.  Here is how you would do so if the working directory is set to your ibutton data folder (<code>.</code>):</p>
+<p>Once you have all your data in a single folder, simply point the function <code>read_ibutton_folder</code> at it.  Here is how you would do so if the working directory is set to your ibutton data folder (<code>.</code>):</p>
 
 <pre><code class="r">library(ibuttonr)
 ibutton.data &lt;- read_ibutton_folder(&quot;.&quot;)
-str(ibutton.data)
+</code></pre>
+
+<pre><code>## Warning: input string 12 is invalid in this locale
+## Warning: input string 13 is invalid in this locale
+## Warning: input string 12 is invalid in this locale
+## Warning: input string 13 is invalid in this locale
+</code></pre>
+
+<pre><code class="r">str(ibutton.data)
 </code></pre>
 
 <pre><code>## List of 5
@@ -256,7 +264,8 @@ str(ibutton.data)
 
 <h3>Stopped ibuttons</h3>
 
-<p>Ibuttons frequently fail, but which ones? you could just check the number of rows in each, and pick
+<p>Ibuttons frequently fail, but which ones? 
+One could just check the number of rows in each, and pick
 the ones which are suspiciously short, indicating that the ibutton stopped
 recording temperature. This function automates this process to make it a bit
 more objective: it points out ones which recorded less than the median number
@@ -280,6 +289,10 @@ could use this to get them from the datafiles themselves</p>
 <pre><code class="r">table(get_registration_numbers(&quot;.&quot;))
 </code></pre>
 
+<pre><code>## Warning: input string 12 is invalid in this locale
+## Warning: input string 13 is invalid in this locale
+</code></pre>
+
 <pre><code>## 
 ## 210000002E13AB21 450000002E1D6821 490000002E2FB221 590000002E1BCC21 
 ##                1                1                1                1 
@@ -287,8 +300,9 @@ could use this to get them from the datafiles themselves</p>
 ##                1
 </code></pre>
 
-<p>correct the dates and make dataframe
-Now that the data is checked, this function takes the list of ibuttons and
+<h2>Correct the dates and make dataframe</h2>
+
+<p>Now that the data is checked, this function takes the list of ibuttons and
 combines them together. It also reformats the &ldquo;Date.Time&rdquo; variable, into a
 format that R recognizes as a date and time.</p>
 

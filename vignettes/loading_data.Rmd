@@ -19,7 +19,7 @@ The data that ibuttons produce requires a bit of cleaning before use in data ana
 
 `ibuttonr` assumes that you have all your ibutton data in a single folder, stored as .csv files. For advice on getting your data out of an ibutton and into a csv, see the [product website](http://www.maximintegrated.com/en/app-notes/index.mvp/id/3358).  
 
-Once you have all your data in a single folder, simply point the function `read.ibutton.folder` at it.  Here is how you would do so if the working directory is set to your ibutton data folder (`.`):
+Once you have all your data in a single folder, simply point the function `read_ibutton_folder` at it.  Here is how you would do so if the working directory is set to your ibutton data folder (`.`):
 
 ```{r}
 library(ibuttonr)
@@ -34,7 +34,9 @@ if your working directory is set elsewhere, you can use a relative path to the f
 ## Checking the data
 
 ### Stopped ibuttons
-Ibuttons frequently fail, but which ones? you could just check the number of rows in each, and pick
+
+Ibuttons frequently fail, but which ones? 
+One could just check the number of rows in each, and pick
 the ones which are suspiciously short, indicating that the ibutton stopped
 recording temperature. This function automates this process to make it a bit
 more objective: it points out ones which recorded less than the median number
@@ -60,7 +62,7 @@ table(get_registration_numbers("."))
 
 ```
 
-correct the dates and make dataframe
+## Correct the dates and make dataframe
 Now that the data is checked, this function takes the list of ibuttons and
 combines them together. It also reformats the "Date.Time" variable, into a
 format that R recognizes as a date and time.
