@@ -1,3 +1,19 @@
+#' Get the length of the 'preamble' of all ibuttons
+#'
+#' ibuttons produce csvs with several lines of text at the beginning,
+#' which describe how the ibutton was configured. This function
+#' determines the length of this text or "preamble".
+#'
+#' @param allfiles a list of all file names of ibuttons
+#' @return an integer giving the number of lines before the header row of the actual data
+#' @export
+get_preamble_length <- function(allfiles){
+  one_top <- readLines(allfiles[1],n = 25)
+  which(grepl("^Date",one_top)) - 1
+}
+
+
+
 #' Add filename to data
 #'
 #' @param f Filename of ibutton data
@@ -20,7 +36,11 @@ read_named_ibutton <- function(f, ...){
 read_ibutton_folder <- function(folder,...){
   # foldername <- paste0("./",folder)
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
-  ibut.dat <- lapply(ibut.files,read_named_ibutton,skip=13,stringsAsFactors=FALSE)
+  nskip <- get_preamble_length(ibut.files)
+  ## count the fields
+  header_line <- nskip + 1
+
+  ibut.dat <- lapply(ibut.files,read_named_ibutton, skip=nskip, stringsAsFactors=FALSE)
   names(ibut.dat) <- lapply(ibut.files,function(f) sub("\\.csv$", "", basename(f)))
   ibut.dat
 }
@@ -42,7 +62,7 @@ id_broken <- function(ibutt.list){
 
 #' Extracts the registration number for an ibutton
 #'
-#' This function extracts the registration number from the "preamble", ie the 13 lines
+#' This function extracts the registration number from the "preamble", ie the lines
 #' of information at the start of an ibutton file
 #'
 #' @param ibutton.preamble An ibutton preamble
@@ -65,7 +85,8 @@ preamble_extract_registration_number <- function(ibutton.preamble){
 get_registration_numbers <- function(folder,...){
   # foldername <- paste0("./",folder)
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
-  ibutton.preamble <- lapply(ibut.files,function(x) readLines(x,n=13))
+  nread <- get_preamble_length(ibut.files)
+  ibutton.preamble <- lapply(ibut.files,function(x) readLines(x,n = nread))
   sapply(ibutton.preamble,preamble_extract_registration_number)
 }
 
