@@ -49,6 +49,8 @@ read_named_ibutton <- function(f, ...){
 #' This function assumes that you have one folder containing only ibutton data.
 #'
 #' @param folder Folder containing ibutton data only
+#' @param override.col.names If your data was saved incorrectly (e.g. with commas both delimiting fields and indicating decimals), you may need to override the column names to read your data. Defaults to NULL
+#' @param extra_args Named list of args for read_named_ibutton (which wraps read.csv)
 #' @return Named list of ibutton data. Names are taken from base names.
 #' @export
 read_ibutton_folder <- function(folder, override.col.names = NULL, extra_args = NULL){
@@ -114,11 +116,10 @@ get_registration_numbers <- function(folder,...){
 
 #' Combines given list of ibuttons into a data.frame
 #'
-#' This function takes a list of ibuttons and \code{rbinds} them.
-#' Also performs date conversion
+#' This function takes a list of ibuttons and \code{rbinds} them. It also performs date conversion
 #'
 #' @param ibut.list List of ibutton data
-#' @param date_format a character string indicating the format of the dates. see `?strptime`
+#' @param date_format a character string indicating the format of the dates. see `?strptime`. Defaults to `%d/%m/%y %I:%M:%S %p`
 #' @export
 ibuttons_to_data_frame <- function(ibut.list, date_format = "%d/%m/%y %I:%M:%S %p"){
   ## attach all together in a complete dataframe

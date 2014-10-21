@@ -9,10 +9,9 @@ ibuttons_to_data_frame(ibut.list, date_format = "\%d/\%m/\%y \%I:\%M:\%S \%p")
 \arguments{
 \item{ibut.list}{List of ibutton data}
 
-\item{date_format}{a character string indicating the format of the dates. see `?strptime`}
+\item{date_format}{a character string indicating the format of the dates. see `?strptime`. Defaults to `%d/%m/%y %I:%M:%S %p`}
 }
 \description{
-This function takes a list of ibuttons and \code{rbinds} them.
-Also performs date conversion
+This function takes a list of ibuttons and \code{rbinds} them. It also performs date conversion
 }
 

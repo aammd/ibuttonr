@@ -4,10 +4,14 @@
 \alias{read_ibutton_folder}
 \title{Read all files in a folder}
 \usage{
-read_ibutton_folder(folder, ...)
+read_ibutton_folder(folder, override.col.names = NULL, extra_args = NULL)
 }
 \arguments{
 \item{folder}{Folder containing ibutton data only}
+
+\item{override.col.names}{If your data was saved incorrectly (e.g. with commas both delimiting fields and indicating decimals), you may need to override the column names to read your data. Defaults to NULL}
+
+\item{extra_args}{Named list of args for read_named_ibutton (which wraps read.csv)}
 }
 \value{
 Named list of ibutton data. Names are taken from base names.
