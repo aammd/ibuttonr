@@ -51,13 +51,17 @@ read_named_ibutton <- function(f, ...){
 #' @param folder Folder containing ibutton data only
 #' @return Named list of ibutton data. Names are taken from base names.
 #' @export
-read_ibutton_folder <- function(folder,...){
+read_ibutton_folder <- function(folder,extra_args = NULL){
   # foldername <- paste0("./",folder)
   ibut.files <- dir(path=folder,full=TRUE,pattern="*.csv")
   nskip <- get_preamble_length(ibut.files)
   ## count the fields
   hnames <- header_names(ibut.files)
-  ibut.dat <- lapply(ibut.files,read_named_ibutton, skip=nskip, stringsAsFactors=FALSE, col.names = hnames)
+  ## assemble arguments
+  read_args <- list(skip = nskip,
+                    col.names = hnames,
+                    stringsAsFactors = FALSE)
+  ibut.dat <- lapply(ibut.files,function(x) do.call(read_named_ibutton, c(f = x, read_args)))
   names(ibut.dat) <- lapply(ibut.files,function(f) sub("\\.csv$", "", basename(f)))
   ibut.dat
 }
