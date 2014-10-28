@@ -115,12 +115,14 @@ get_registration_numbers <- function(folder,...){
   sapply(ibutton.preamble,preamble_extract_registration_number)
 }
 
-#' Combines given list of ibuttons into a data.frame
+#' Combines given list of ibuttons into a dataframe
 #'
-#' This function takes a list of ibuttons and \code{rbinds} them. It also performs date conversion
+#' combine output of read_ibutton_folder
+#'
+#' converts dates. combines list.
 #'
 #' @param ibut.list List of ibutton data
-#' @param date_format a character string indicating the format of the dates. see `?strptime`. Defaults to `%d/%m/%y %I:%M:%S %p`
+#' @param date_format a character string indicating the format of the dates. see help for `strptime`. Defaults to `\%d/\%m/\%y \%I:\%M:\%S \%p`
 #' @export
 ibuttons_to_data_frame <- function(ibut.list, date_format = "%d/%m/%y %I:%M:%S %p"){
   ## attach all together in a complete dataframe
