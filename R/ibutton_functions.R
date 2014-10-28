@@ -64,6 +64,7 @@ read_ibutton_folder <- function(folder, override.col.names = NULL, extra_args = 
                     col.names = hnames,
                     stringsAsFactors = FALSE)
   read_args$col.names <- if(!is.null(override.col.names)) override.col.names
+  read_args <- c(read_args, extra_args)
   ibut.dat <- lapply(ibut.files,function(x) do.call(read_named_ibutton, c(f = x, read_args)))
   names(ibut.dat) <- lapply(ibut.files,function(f) sub("\\.csv$", "", basename(f)))
   ibut.dat
