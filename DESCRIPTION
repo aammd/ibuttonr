@@ -9,6 +9,7 @@ Maintainer: <a.a.m.macdonald@gmail.com>
 Description: This package contains some simple functions for
     conveniently loading data produced by ibuttons
 License: Apache License, Version 2.0
-Suggests:
-    knitr
+Suggests: 
+    knitr,
+    testthat
 VignetteBuilder: knitr
