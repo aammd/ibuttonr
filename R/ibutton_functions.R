@@ -8,7 +8,7 @@
 #' @return an integer giving the number of lines before the header row of the actual data
 #' @export
 get_preamble_length <- function(allfiles){
-  one_top <- readLines(allfiles[1],n = 25)
+  one_top <- readLines(allfiles[1],n = 25, encoding = "UTF-8")
   which(grepl("^Date",one_top)) - 1
 }
 
@@ -23,7 +23,7 @@ get_preamble_length <- function(allfiles){
 #' @return an integer giving the number of fields in row below the header
 #' @export
 header_names <- function(allfiles){
-  one_top <- readLines(allfiles[1], n = 25)
+  one_top <- readLines(allfiles[1], n = 25, encoding = "UTF-8")
   loc_header <- which(grepl("^Date", one_top))
   # the number of fields in the data, one row below the header
   dat_len <- count.fields(textConnection(one_top[loc_header + 1]), sep = ",")
